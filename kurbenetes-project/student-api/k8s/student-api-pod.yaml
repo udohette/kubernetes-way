@@ -1,0 +1,19 @@
+apiVersion: v1
+
+kind: Pod
+
+metadata:
+  name: student-api
+  labels:
+    app: student-api
+
+spec:
+  containers:
+    - name: student-api
+      image: student-api:1.0
+      imagePullPolicy: IfNotPresent
+      ports:
+        - containerPort: 3000
+      env:
+        - name: APP_ENV
+          value: kubernetes-local
