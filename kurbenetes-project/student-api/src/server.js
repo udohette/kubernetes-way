@@ -28,6 +28,15 @@ app.post("/hello", (req, res) => {
   });
 });
 
+app.get("/info", (req, res) => {
+
+  res.json({
+    message: "EI Technologies Devops Course",
+    message: "Week 7",
+    message: "Student API"
+  });
+});
+
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Student API listening on port ${PORT}`);
 });
