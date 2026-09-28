@@ -1,0 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: prod
+
+resources:
+  - ../../base
+
+replicas:
+  - name: student-api
+    count: 3
+
+configMapGenerator:
+  - name: student-api-config
+    literals:
+      - APP_ENV=production
+      - APP_MESSAGE=Student API - Production
+
+generatorOptions:
+  disableNameSuffixHash: true
+images:
+- name: student-api
+  newName: student-api
+  newTag: "5.0"

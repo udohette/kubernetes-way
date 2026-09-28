@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: student-api
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: student-api
+
+  template:
+    metadata:
+      labels:
+        app: student-api
+
+    spec:
+      containers:
+        - name: student-api
+          image: student-api:4.0
+          imagePullPolicy: IfNotPresent
+
+          ports:
+            - containerPort: 3000
+
+          envFrom:
+            - configMapRef:
+                name: student-api-config
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            periodSeconds: 5
+
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"

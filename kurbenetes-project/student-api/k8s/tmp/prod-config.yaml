@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: student-api-config
+  namespace: prod
+
+data:
+  APP_ENV: "production"
+  APP_MESSAGE: "Student API - Production"

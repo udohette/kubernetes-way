@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: student-api-config
+  namespace: devops-class
+
+data:
+  APP_ENV: "classroom-kubernetes"
+  APP_MESSAGE: "Student API configured by Kubernetes ConfigMap"

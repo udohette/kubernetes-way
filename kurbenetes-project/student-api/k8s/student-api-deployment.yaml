@@ -1,0 +1,98 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: student-api
+  namespace: devops-class
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: student-api
+
+  template:
+    metadata:
+      labels:
+        app: student-api
+
+    spec:
+      containers:
+        - name: student-api
+          image: student-api:4.0
+          imagePullPolicy: IfNotPresent
+
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
+
+          ports:
+            - containerPort: 3000
+
+          env:
+            - name: APP_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: student-api-config
+                  key: APP_ENV
+
+            - name: APP_MESSAGE
+              valueFrom:
+                configMapKeyRef:
+                  name: student-api-config
+                  key: APP_MESSAGE
+
+            - name: API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: student-api-secret
+                  key: API_KEY
+
+            # ADD THIS
+            - name: DATA_DIR
+              value: "/data"
+
+
+          volumeMounts:
+            - name: student-data
+              mountPath: /data
+
+
+          startupProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            failureThreshold: 10
+            periodSeconds: 2
+
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 2
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 3
+
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+
+
+      # ADD THIS AT SAME LEVEL AS containers:
+      volumes:
+        - name: student-data
+          persistentVolumeClaim:
+            claimName: student-data

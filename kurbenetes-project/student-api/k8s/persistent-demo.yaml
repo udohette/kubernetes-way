@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: persistent-demo
+  namespace: devops-class
+spec:
+  containers:
+    - name: ubuntu
+      image: ubuntu:24.04
+      command: ["sh", "-c", "sleep 36000"]
+      volumeMounts:
+        - name: persistent-storage
+          mountPath: /data
+  volumes:
+    - name: persistent-storage
+      persistentVolumeClaim:
+        claimName: student-data
