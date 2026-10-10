@@ -24,14 +24,17 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "24"
+          node-version: "22"
           cache: npm
 
       - name: Install dependencies
+        working-directory: kubernetes-project/student-api
         run: npm ci
 
       - name: Run tests
+        working-directory: kubernetes-project/student-api
         run: npm test
 
       - name: Build Docker image
+        working-directory: kubernetes-project/student-api
         run: docker build -t student-api:${{ github.sha }} .
