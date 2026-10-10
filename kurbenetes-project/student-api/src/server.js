@@ -18,8 +18,8 @@ app.get("/", (req, res) => {
     environment: APP_ENV,
     apiKeyConfigured: API_KEY !== "not-configured",
     status: "success",
-    version: "5.0.0",
-    release: "multi-environment-promotion"
+    version: "6.1.0",
+    release: "cloud-rollout-6.1"
   });
 });
 
