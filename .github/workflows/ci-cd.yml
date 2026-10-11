@@ -27,13 +27,13 @@ jobs:
           node-version: "22"
 
       - name: Install dependencies
-        working-directory: kubernetes-project/student-api
+        working-directory: kurbenetes-project/student-api
         run: npm ci
 
       - name: Run tests
-        working-directory: kubernetes-project/student-api
+        working-directory: kurbenetes-project/student-api
         run: npm test
 
       - name: Build Docker image
-        working-directory: kubernetes-project/student-api
+        working-directory: kurbenetes-project/student-api
         run: docker build -t student-api:${{ github.sha }} .
