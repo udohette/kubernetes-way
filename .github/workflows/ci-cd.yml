@@ -26,6 +26,7 @@ jobs:
         with:
           node-version: "22"
           cache: npm
+          cache-dependency-path: kubernetes-project/student-api/package-lock.json
 
       - name: Install dependencies
         working-directory: kubernetes-project/student-api
